@@ -19,6 +19,13 @@ section .bss
 
 section .text
 	global _start
+	
+_socket:
+	mov eax, 359
+	mov ebx, 2
+	mov ecx, 2
+	mov edx, 17
+	int 0x80
 
 _exit:
 	mov eax, 1               ; syscall exit
