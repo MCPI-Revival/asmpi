@@ -67,9 +67,7 @@ _cmd:
 	mov ecx, usrin           ; define output
 	mov edx, 16              ; define output length
 	int 0x80                 ; execute sys call
-	mov eax, [cmdstop]
-	mov ebx, [usrin]
-	cmp eax, ebx
+	cmp [cmdstop], [usrin]
 	je _stop
 	mov eax, [cmdhelp]
 	mov ebx, [usrin]
