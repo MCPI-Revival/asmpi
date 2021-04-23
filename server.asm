@@ -30,6 +30,7 @@ _stdnonblock:
 	mov ecx, 4
 	mov edx, 2048
 	int 0x80
+	ret
 
 _socket:
 	mov eax, 359
