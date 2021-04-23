@@ -4,7 +4,7 @@ section .data
 	strtmsg db "Starting ASMPi...", 0x0a
 	strtmsg_len equ $ - strtmsg
 	donemsg db "Done. Type help to view all available commands.", 0x0a
-	donemsg_len equ $ - strtmsg
+	donemsg_len equ $ - donemsg
 	imh db 0x1b, "[0;33m", "[", 0x1b, "[0;1;32m", "INFO", 0x1b, "[0;33m", "]", 0x1b, "[0;1;35m", " > ", 0x1b, "[0m"
 	imh_len equ $ - imh
 	helpmsg db "----- HELP: ----", 0x0a, "stop: shuts down the server", 0x0a, "help: views all available commands", 0x0a
