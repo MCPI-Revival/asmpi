@@ -1,3 +1,3 @@
 all:
-	nasm -f elf64 ./server.asm
-	ld ./server.o -o server
+	nasm -f elf32 ./server.asm
+	ld -m elf-i386 ./server.o -o server
