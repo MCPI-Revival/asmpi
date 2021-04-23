@@ -16,6 +16,8 @@ section .data
 
 section .bss
 	usrin resb 16
+	socket resb 16
+	
 
 section .text
 	global _start
@@ -26,6 +28,7 @@ _socket:
 	mov ecx, 2
 	mov edx, 17
 	int 0x80
+	mov eax, socket
 
 _exit:
 	mov eax, 1               ; syscall exit
