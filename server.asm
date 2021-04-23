@@ -3,6 +3,8 @@ section .data
 	asmpi_len equ $ - asmpi
 	strtmsg db "Starting ASMPi...", 0x0a
 	strtmsg_len equ $ - strtmsg
+	donemsg db "Done. Type help to view all available commands.", 0x0a
+	donemsg_len equ $ - strtmsg
 	imh db 0x1b, "[0;33m", "[", 0x1b, "[0;1;32m", "INFO", 0x1b, "[0;33m", "]", 0x1b, "[0;1;35m", " > ", 0x1b, "[0m"
 	imh_len equ $ - imh
 	helpmsg db "----- HELP: ----", 0x0a, "stop: shuts down the server", 0x0a, "help: views all available commands", 0x0a
@@ -21,7 +23,14 @@ section .bss
 
 section .text
 	global _start
-	
+
+_stdnonblock:
+	mov eax, 55
+	mov ebx, 0
+	mov ecx, 4
+	mov edx, 2048
+	int 0x80
+
 _socket:
 	mov eax, 359
 	mov ebx, 2
@@ -64,7 +73,7 @@ _help:
 	mov edx, helpmsg_len     ; define output length
 	call _print
 
-_cmd:
+_mainloop:
 	mov eax, 3               ; syscall read
 	mov ebx, 0               ; stdin
 	mov ecx, usrin           ; define output
@@ -78,7 +87,7 @@ _cmd:
 	mov ebx, [usrin]
 	cmp eax, ebx
 	je _help
-	jmp _cmd                 ; loop for ever
+	jmp _mainloop            ; loop for ever
 
 _start:
 	mov ecx, asmpi           ; define output
@@ -90,6 +99,13 @@ _start:
 	mov edx, strtmsg_len     ; define output length
 	call _print
 
-	call _cmd
+	call _stdnonblock
+	
+	call _printinfo
+	mov ecx, donemsg         ; define output
+	mov edx, donemsg_len     ; define output length
+	call _print
+
+	call _mainloop
 
 	call _exit
