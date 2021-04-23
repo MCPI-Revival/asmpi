@@ -98,6 +98,8 @@ _mainloop:
 	mov ebx, [usrin]
 	cmp eax, ebx
 	je _help
+	mov eax, 0
+	mov eax, usrin
 	jmp _mainloop            ; loop for ever
 
 _start:
