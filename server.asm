@@ -93,10 +93,14 @@ _mainloop:
 	mov eax, [cmdstop]
 	mov ebx, [usrin]
 	cmp eax, ebx
+	mov eax, 0
+	mov eax, usrin
 	je _stop
 	mov eax, [cmdhelp]
 	mov ebx, [usrin]
 	cmp eax, ebx
+	mov eax, 0
+	mov eax, usrin
 	je _help
 	mov eax, 0
 	mov eax, usrin
