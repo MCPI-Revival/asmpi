@@ -31,6 +31,14 @@ _stdnonblock:
 	mov edx, 2048
 	int 0x80
 	ret
+	
+_stdblock:
+	mov eax, 55
+	mov ebx, 0
+	mov ecx, 4
+	mov edx, -2049
+	int 0x80
+	ret
 
 _socket:
 	mov eax, 359
@@ -75,11 +83,13 @@ _help:
 	call _print
 
 _mainloop:
+	call _stdnonblock
 	mov eax, 3               ; syscall read
 	mov ebx, 0               ; stdin
 	mov ecx, usrin           ; define output
 	mov edx, 16              ; define output length
 	int 0x80                 ; execute sys call
+	call _stdblock
 	mov eax, [cmdstop]
 	mov ebx, [usrin]
 	cmp eax, ebx
@@ -99,8 +109,6 @@ _start:
 	mov ecx, strtmsg         ; define output
 	mov edx, strtmsg_len     ; define output length
 	call _print
-
-	call _stdnonblock
 	
 	call _printinfo
 	mov ecx, donemsg         ; define output
