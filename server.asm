@@ -83,13 +83,13 @@ _help:
 	call _print
 
 _mainloop:
-	call _stdnonblock
+	;call _stdnonblock
 	mov eax, 3               ; syscall read
 	mov ebx, 0               ; stdin
 	mov ecx, usrin           ; define output
 	mov edx, 16              ; define output length
 	int 0x80                 ; execute sys call
-	call _stdblock
+	;call _stdblock
 	mov eax, [cmdstop]
 	mov ebx, [usrin]
 	cmp eax, ebx
